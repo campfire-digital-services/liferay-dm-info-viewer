@@ -17,11 +17,14 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%@ page import="java.text.Format" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.MapUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
+<%@ page import="com.liferay.portal.security.permission.ResourceActionsUtil" %>
 <%@ page import="org.apache.commons.io.FileUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
@@ -31,6 +34,17 @@ String redirect = ParamUtil.getString(request, "redirect");
 Map folderInfoMap = (Map)request.getAttribute("folderInfoMap");
 
 long repositoryId = MapUtil.getLong(folderInfoMap, "repositoryId");
+String repositoryName = MapUtil.getString(folderInfoMap, "repositoryName");
+if (StringUtils.isEmpty(repositoryName)) {
+	repositoryName = "Local";
+}
+String repositoryClassName = MapUtil.getString(folderInfoMap, "repositoryClassName");
+
+// String repositoryType = StringPool.BLANK;
+String repositoryType = "Local";
+if (!StringUtils.isEmpty(repositoryClassName)) {
+	repositoryType = ResourceActionsUtil.getModelResource(locale, repositoryClassName); 
+}
 
 long folderId = MapUtil.getLong(folderInfoMap, "folderId");
 
@@ -39,11 +53,14 @@ if (StringUtils.isEmpty(folderName)) {
 	folderName = StringPool.BLANK + folderId;
 }
 
-Date folderCreateDate = (Date)folderInfoMap.get("folderCreateDate");
 String folderCreateDateStr = StringPool.BLANK;
-if (folderCreateDate !=null ) {
-	// TODO - use locale date formatter
+// Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Date folderCreateDate = (Date)folderInfoMap.get("folderCreateDate");
+if (folderCreateDate != null ) {
 	folderCreateDateStr = folderCreateDate.toString();
+	if (dateFormatDateTime != null) {
+		folderCreateDateStr = dateFormatDateTime.format(folderCreateDate);		
+	}
 }
 	
 String folderDescription = MapUtil.getString(folderInfoMap, "folderDescription");
@@ -83,8 +100,10 @@ if (folderUsageFolderSizeStr != null) {
 <li>Size: <%= folderUsageFolderSizeStr %></li>
 <li>Contents: <%= folderFileCountStr %></li>
 </ul>
-<h2>Respository Details</h2>
+<h2>Repository Details</h2>
 <ul>
 <li>ID: <%= repositoryId %></li>
+<li>Name: <%= repositoryName %></li>
+<li>Type: <%= repositoryType %></li>
 </ul>
 </div>

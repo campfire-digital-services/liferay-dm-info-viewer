@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -86,10 +88,22 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
     protected DLFolderInfo buildFolderInfo( RenderRequest renderRequest, RenderResponse renderResponse ) throws Exception {
 
         ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+        long groupId = ParamUtil.getLong(renderRequest, "groupId");
+        long scopeGroupId = themeDisplay.getScopeGroupId();
+        String scopeGroupName = themeDisplay.getScopeGroupName();
         long repositoryId = ParamUtil.getLong(renderRequest, "repositoryId");
         long folderId = ParamUtil.getLong(renderRequest, "folderId");
         Folder folder = DLAppServiceUtil.getFolder(folderId);
         ServiceContext serviceContext = ServiceContextFactory.getInstance(Folder.class.getName(), renderRequest);
+        
+        if (s_log.isDebugEnabled()) {
+        	ParamUtil.print(renderRequest);
+        	s_log.debug("groupId: " + groupId);
+        	s_log.debug("scopeGroupId: " + scopeGroupId);
+        	s_log.debug("scopeGroupName: " + scopeGroupName);
+        	s_log.debug("repositoryId: " + repositoryId);
+        	s_log.debug("folderId: " + folderId);
+        }
 
         PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
@@ -101,7 +115,6 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         
         try {
         	
-
         	DLFolderUsage folderUsage = DLFolderUsageServiceUtil.calculateFolderUsage( repositoryId, folderId, serviceContext );
 
         	folderInfo.setFolderId(folderId);
@@ -111,7 +124,17 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         	folderInfo.setFolderPath(buildPath(folder));
         	folderInfo.setFolderUsage(folderUsage);
         	folderInfo.setFolderUserId(folder.getUserId());
+        	
         	folderInfo.setRepositoryId(repositoryId);
+        	
+        	Repository repository = null;
+    		if (repositoryId != scopeGroupId) {
+    			repository = RepositoryServiceUtil.getRepository(repositoryId);
+    			if (repository != null) {
+        			folderInfo.setRepositoryName(repository.getName());
+        			folderInfo.setRepositoryClassName(repository.getClassName());
+    			}
+    		}
         	
         } catch (Exception e) {
         	
@@ -119,7 +142,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         				+ " in repository " + repositoryId
         				+ " : " + e.getMessage();
         	
-        	s_log.error( msg ,e );
+        	s_log.error( msg, e );
         	
         	throw new PortalException( msg, e ); 
         	
@@ -147,7 +170,9 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         map.put("folderUsageFolderSize", folderInfo.getFolderUsage().getFolderSize());  
         map.put("folderUserId", folderInfo.getFolderUserId());
         map.put("repositoryId", folderInfo.getRepositoryId());
-        
+        map.put("repositoryName", folderInfo.getRepositoryName());
+        map.put("repositoryClassName", folderInfo.getRepositoryClassName());
+
         return map;
     }
     
@@ -179,6 +204,5 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 
 		return StringUtil.split(path, CharPool.SLASH);
 	}	
-
 
 }
