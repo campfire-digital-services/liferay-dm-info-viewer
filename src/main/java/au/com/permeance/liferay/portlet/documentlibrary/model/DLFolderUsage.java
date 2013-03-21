@@ -55,4 +55,10 @@ public class DLFolderUsage {
 		this.fileCount = fileCount;
 	}
 
+	@Override
+	public String toString() {
+		return "DLFolderUsage [folderSize=" + folderSize + ", folderCount="
+				+ folderCount + ", fileCount=" + fileCount + "]";
+	}
+
 }

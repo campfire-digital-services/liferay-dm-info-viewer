@@ -14,27 +14,33 @@ The view is similar to MS Windows File Explorer Properties and Apple Mac OS X Fi
 
 ## Downloads
 
-TODO
+The latest releases are available from [SourceForge](https://sourceforge.net/projects/permeance-apps/files/liferay-documents-and-media-info-viewer/releases/ "Liferay Documents and Media Info Viewer").
 
 
 ## Usage
 
 Step 1. Navigate to Liferay Portal page containing Documents and Media portlet.
 
+![Documents and Media Portlet](/docs/images/liferay-dm-portlet-root-folder-view-20130209.png "Documents an Media Portlet")
+
 Step 2. Click on the "Action" button for a folder and select the "Show Info" menu item.
 
+![Documents and Media Folder Action Menu](/docs/images/liferay-dm-portlet-folder-info-action-menu-20130319T0043.png "Documents an Media Folder Action Menu")
+
 Step 3. View info and click "OK" button to close popup.
+
+![Documents and Media Folder Info Popup](/docs/images/liferay-dm-portlet-folder-info-popup-20130319T0048.png "Documents an Media Folder Info Popup")
 
 
 ## Building
 
 Step 1. Checkout source from GitHub project
 
-    % git  clone  https://github.com/permeance/liferay-dm-info-viewer
+    % git clone https://github.com/permeance/liferay-dm-info-viewer
 
 Step 2. Build and package
 
-    % mvn  -U  clean  package
+    % mvn -U clean package
 
 This will build "liferay-dm-info-viewer-hook-XXX.war" in the targets tolder.
 

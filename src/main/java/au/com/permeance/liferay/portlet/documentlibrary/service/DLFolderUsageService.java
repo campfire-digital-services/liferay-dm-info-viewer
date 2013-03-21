@@ -29,7 +29,17 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface DLFolderUsageService {
 	
-    public DLFolderUsage calculateFolderUsage( long groupId, long repositoryId, long folderId, ServiceContext serviceContext )
+    /**
+     * Calculate Folder Usage.
+     * 
+     * @param repositoryId repository containing folder
+     * @param folderId folder ID
+     * @param serviceContext service context
+     * 
+     * @throws PortalException
+     * @throws SystemException
+     */	
+    public DLFolderUsage calculateFolderUsage( long repositoryId, long folderId, ServiceContext serviceContext )
     	throws PortalException, SystemException;
 
 }

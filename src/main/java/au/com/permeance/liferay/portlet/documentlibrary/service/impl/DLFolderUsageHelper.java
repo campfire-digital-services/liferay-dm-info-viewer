@@ -46,16 +46,14 @@ public class DLFolderUsageHelper {
     /**
      * Calculate Folder Usage.
      * 
-     * @param groupId group id
-     * @param repositoryId source repository containing folder to export
-     * @param folderId source folder to export
+     * @param repositoryId repository containing folder
+     * @param folderId folder ID
      * @param serviceContext service context
      * 
      * @throws PortalException
      * @throws SystemException
      */
-    public static DLFolderUsage calculateFolderUsage(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext ) 
+    public static DLFolderUsage calculateFolderUsage( long repositoryId, long folderId, ServiceContext serviceContext ) 
     	throws PortalException, SystemException
    	{
     	
@@ -65,7 +63,7 @@ public class DLFolderUsageHelper {
     		
         	DLFolderUsageCollector folderUsageCollector = new DLFolderUsageCollector();
     		
-        	calculateFolderUsage( groupId, repositoryId, folderId, serviceContext, folderUsageCollector );
+        	calculateFolderUsage( repositoryId, folderId, serviceContext, folderUsageCollector );
     		
     		folderUsage = folderUsageCollector.buildFolderUsage();
         	
@@ -92,17 +90,16 @@ public class DLFolderUsageHelper {
     /**
      * Visit Folder.
      * 
-     * @param groupId group id
-     * @param repositoryId source repository containing folder to export
-     * @param folderId source folder to export
+     * @param repositoryId repository containing folder
+     * @param folderId folder ID
      * @param serviceContext service context
      * @param folderUsageCollector folder usage collector
      * 
      * @throws PortalException
      * @throws SystemException
      */
-    public static void calculateFolderUsage(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, DLFolderUsageCollector folderUsageCollector ) 
+    public static void calculateFolderUsage( 
+    		long repositoryId, long folderId, ServiceContext serviceContext, DLFolderUsageCollector folderUsageCollector ) 
     	throws PortalException, SystemException 
     {
 
@@ -111,14 +108,14 @@ public class DLFolderUsageHelper {
             Folder folder = DLAppServiceUtil.getFolder( folderId );
             
             if (s_log.isDebugEnabled()) {
-            	s_log.debug("visit folder " + folder.getFolderId() + "/" + folder.getName());
+            	s_log.debug("calculating usage for folder " + folder.getFolderId() + "/" + folder.getName());
             }
 
-            calculateFolderUsage( groupId, repositoryId, folder, StringPool.BLANK, serviceContext, folderUsageCollector );
+            calculateFolderUsage( repositoryId, folder, StringPool.BLANK, serviceContext, folderUsageCollector );
 
         } catch (Exception e) {
 
-            String msg = "Error visiting folder " + folderId 
+            String msg = "Error calculating usage for folder " + folderId 
             		+ " in repository " + repositoryId 
             		+ " : " + e.getMessage();
 
@@ -137,10 +134,9 @@ public class DLFolderUsageHelper {
     /**
      * Visit Folder.
      * 
-     * @param groupId group id
-     * @param repositoryId source repository containing folder to export
-     * @param folder source folder to export
-     * @param folderPath source folder path to export
+     * @param repositoryId repository containing folder
+     * @param folder folder
+     * @param folderPath folder path
      * @param serviceContext service context
      * @param folderUsageCollector folder usage collector
      * 
@@ -148,14 +144,14 @@ public class DLFolderUsageHelper {
      * @throws SystemException
      */    
     public static void calculateFolderUsage(
-    		long groupId, long repositoryId, Folder folder, String folderPath, ServiceContext serviceContext, DLFolderUsageCollector folderUsageCollector ) 
+    		long repositoryId, Folder folder, String folderPath, ServiceContext serviceContext, DLFolderUsageCollector folderUsageCollector ) 
     	throws PortalException, SystemException 
     {
 
         // Visit file entries in folder
     	
         if (s_log.isDebugEnabled()) {
-        	s_log.debug("visit folder " + folder.getFolderId() + "/" + folder.getName());
+        	s_log.debug("calculating usage for folder " + folder.getFolderId() + "/" + folder.getName());
         }
     	
         List<FileEntry> fileEntryList = DLAppServiceUtil.getFileEntries(folder.getRepositoryId(), folder.getFolderId(), QueryUtil.ALL_POS,
@@ -181,7 +177,7 @@ public class DLFolderUsageHelper {
         for (Folder subFolder : subFolderList) {
             String subFolderName = subFolder.getName();
             String subFolderPath = folderPath + subFolderName + StringPool.FORWARD_SLASH;
-            calculateFolderUsage( groupId, repositoryId, subFolder, subFolderPath, serviceContext, folderUsageCollector );
+            calculateFolderUsage( repositoryId, subFolder, subFolderPath, serviceContext, folderUsageCollector );
             folderUsageCollector.incrementFolderCount();
         }
     }
@@ -203,7 +199,7 @@ public class DLFolderUsageHelper {
     {
     	
         if (s_log.isDebugEnabled()) {
-        	s_log.debug("visit file entry " + fileEntry.getFileEntryId() + "/" + fileEntry.getTitle());
+        	s_log.debug("calculating usage for file entry " + fileEntry.getFileEntryId() + "/" + fileEntry.getTitle());
         }
     	
         try {
@@ -214,7 +210,7 @@ public class DLFolderUsageHelper {
             
         } catch (Exception e) {
 
-            String msg = "Error visiting file entry " + fileEntry.getFileEntryId() + " : " + e.getMessage();
+            String msg = "Error calculating usage for file entry " + fileEntry.getFileEntryId() + " : " + e.getMessage();
 
             s_log.error(msg, e);
 
@@ -227,8 +223,6 @@ public class DLFolderUsageHelper {
             } else if (e instanceof IOException) {
                 throw (IOException) e;
             }
-            
-        } finally {
         }
     }
 

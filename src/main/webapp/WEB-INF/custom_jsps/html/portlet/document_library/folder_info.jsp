@@ -17,9 +17,11 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="com.liferay.portal.kernel.util.MapUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="org.apache.commons.io.FileUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
@@ -28,30 +30,39 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Map folderInfoMap = (Map)request.getAttribute("folderInfoMap");
 
+long repositoryId = MapUtil.getLong(folderInfoMap, "repositoryId");
+
 long folderId = MapUtil.getLong(folderInfoMap, "folderId");
+
 String folderName = MapUtil.getString(folderInfoMap, "folderName");
 if (StringUtils.isEmpty(folderName)) {
 	folderName = StringPool.BLANK + folderId;
 }
 
-long repositoryId = MapUtil.getLong(folderInfoMap, "repositoryId");
-String repositoryName = MapUtil.getString(folderInfoMap, "repositoryName");
-if (StringUtils.isEmpty(repositoryName)) {
-	repositoryName = StringPool.BLANK + repositoryId;
+Date folderCreateDate = (Date)folderInfoMap.get("folderCreateDate");
+String folderCreateDateStr = StringPool.BLANK;
+if (folderCreateDate !=null ) {
+	// TODO - use locale date formatter
+	folderCreateDateStr = folderCreateDate.toString();
 }
-
-long folderSize = MapUtil.getLong(folderInfoMap, "folderSize");
-long folderCount = MapUtil.getLong(folderInfoMap, "folderCount");
-long fileCount = MapUtil.getLong(folderInfoMap, "fileCount");
-String folderLocation = MapUtil.getString(folderInfoMap, "folderLocation");
+	
+String folderDescription = MapUtil.getString(folderInfoMap, "folderDescription");
+if (!StringUtils.isEmpty(folderDescription)) {
+	folderDescription = StringUtil.shorten(folderDescription, 40, "...");
+}
+long folderUsageFolderSize = MapUtil.getLong(folderInfoMap, "folderUsageFolderSize");
+long folderUsageFolderCount = MapUtil.getLong(folderInfoMap, "folderUsageFolderCount");
+long folderUsageFileCount = MapUtil.getLong(folderInfoMap, "folderUsageFileCount");
+String folderPath = MapUtil.getString(folderInfoMap, "folderPath");
+long folderUserId = MapUtil.getLong(folderInfoMap, "folderUserId");
 
 String folderInfoHeading = folderName + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + folderId + StringPool.CLOSE_PARENTHESIS; 
-String folderContentSummary = folderCount + " Folders" + ", " + fileCount + " Files";
+String folderFileCountStr = folderUsageFolderCount + " Folder(s)" + ", " + folderUsageFileCount + " File(s)";
 
-String folderSizeStr = FileUtils.byteCountToDisplaySize(folderSize);
-if (folderSizeStr != null) {
-	if (!folderSizeStr.endsWith("bytes")) {
-		folderSizeStr += " (" + folderSize + " bytes)";
+String folderUsageFolderSizeStr = FileUtils.byteCountToDisplaySize(folderUsageFolderSize);
+if (folderUsageFolderSizeStr != null) {
+	if (!folderUsageFolderSizeStr.endsWith("bytes")) {
+		folderUsageFolderSizeStr += " (" + folderUsageFolderSize + " bytes)";
 	}
 }
 %>
@@ -61,22 +72,19 @@ if (folderSizeStr != null) {
 <liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
 </h1>
 <hr>
+<h2>Folder Details</h2>
 <ul>
-<li>Folder ID: <%= folderId %></li>
-<li>Folder Name: <%= folderName %></li>
-<li>Repository ID: <%= repositoryId %></li>
-<li>Repository Name: <%= repositoryName %></li>
-<li>Folder Location: <%= folderLocation %></li>
-<li>Folder Size: <%= folderSizeStr %></li>
-<li>Folder Contents: <%= folderContentSummary %></li>
+<li>ID: <%= folderId %></li>
+<li>Name: <%= folderName %></li>
+<li>Description: <%= folderDescription %></li>
+<li>Creation Date: <%= folderCreateDateStr %></li>
+<li>Owner: <%= folderUserId %></li>
+<li>Location: <%= folderPath %></li>
+<li>Size: <%= folderUsageFolderSizeStr %></li>
+<li>Contents: <%= folderFileCountStr %></li>
 </ul>
-<%--
-<p>
-Folder Info Map: <%= folderInfoMap %>
-</p>
---%>
+<h2>Respository Details</h2>
+<ul>
+<li>ID: <%= repositoryId %></li>
+</ul>
 </div>
-
-<%
-ParamUtil.print(request);
-%>

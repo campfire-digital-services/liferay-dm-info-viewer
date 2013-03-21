@@ -35,26 +35,14 @@ public class DLFolderUsageCollector {
 		return folderSize;
 	}
 
-	public void setFolderSize(long folderSize) {
-		this.folderSize = folderSize;
-	}
-
 	public long getFolderCount() {
 		return folderCount;
-	}
-
-	public void setFolderCount(long folderCount) {
-		this.folderCount = folderCount;
 	}
 
 	public long getFileCount() {
 		return fileCount;
 	}
 
-	public void setFileCount(long fileCount) {
-		this.fileCount = fileCount;
-	}
-	
 	public void incrementFolderCount() {
 		this.folderCount++;
 	}

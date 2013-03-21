@@ -24,12 +24,12 @@ import java.util.Date;
  * Folder Info.
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
+ * 
+ * @see DLFolderUsage
  */
 public class DLFolderInfo {
 	
 	private long repositoryId = (-1L);
-	
-	private String repositoryName =  StringPool.BLANK;
 	
 	private long folderId = (-1L);
 	
@@ -37,12 +37,13 @@ public class DLFolderInfo {
 	
 	private String folderDescription = StringPool.BLANK;
 	
-	private String folderLocation = StringPool.BLANK;
+	private String folderPath = StringPool.BLANK;
 	
-	private Date createDate;
+	private Date folderCreateDate;
 	
 	private DLFolderUsage folderUsage = new DLFolderUsage();
 	
+	private long folderUserId = (-1L);
 	
 	public DLFolderInfo() {
 	}
@@ -71,12 +72,12 @@ public class DLFolderInfo {
 		this.folderName = folderName;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getFolderCreateDate() {
+		return folderCreateDate;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setFolderCreateDate(Date createDate) {
+		this.folderCreateDate = createDate;
 	}
 
 	public DLFolderUsage getFolderUsage() {
@@ -87,13 +88,6 @@ public class DLFolderInfo {
 		this.folderUsage = folderUsage;
 	}
 
-	@Override
-	public String toString() {
-		return "DLFolderInfo [repositoryId=" + repositoryId + ", folderId="
-				+ folderId + ", folderName=" + folderName + ", createDate="
-				+ createDate + ", folderUsage=" + folderUsage + "]";
-	}
-
 	public String getFolderDescription() {
 		return folderDescription;
 	}
@@ -102,20 +96,30 @@ public class DLFolderInfo {
 		this.folderDescription = folderDescription;
 	}
 
-	public String getRepositoryName() {
-		return repositoryName;
+	public String getFolderPath() {
+		return folderPath;
 	}
 
-	public void setRepositoryName(String repositoryName) {
-		this.repositoryName = repositoryName;
+	public void setFolderPath(String folderLocation) {
+		this.folderPath = folderLocation;
 	}
 
-	public String getFolderLocation() {
-		return folderLocation;
+	public long getFolderUserId() {
+		return folderUserId;
 	}
 
-	public void setFolderLocation(String folderLocation) {
-		this.folderLocation = folderLocation;
+	public void setFolderUserId(long folderUserId) {
+		this.folderUserId = folderUserId;
+	}
+
+	@Override
+	public String toString() {
+		return "DLFolderInfo [repositoryId=" + repositoryId + ", folderId="
+				+ folderId + ", folderName=" + folderName
+				+ ", folderDescription=" + folderDescription + ", folderPath="
+				+ folderPath + ", folderCreateDate=" + folderCreateDate
+				+ ", folderUsage=" + folderUsage + ", folderUserId="
+				+ folderUserId + "]";
 	}
 
 }

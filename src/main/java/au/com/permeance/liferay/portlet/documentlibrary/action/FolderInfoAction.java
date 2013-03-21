@@ -20,11 +20,15 @@ import au.com.permeance.liferay.portlet.documentlibrary.model.DLFolderUsage;
 import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderUsageServiceUtil;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -59,27 +63,29 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 	public String render( PortletConfig portletConfig, RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-        long repositoryId = ParamUtil.getLong(renderRequest, "repositoryId");
-        long folderId = ParamUtil.getLong(renderRequest, "folderId");
-        
         final String PAGE_PATH = "/portlet/document_library/folder_info.jsp";
         
-        DLFolderInfo folderInfo = calculateFolderInfo(renderRequest, renderResponse);
+        DLFolderInfo folderInfo = buildFolderInfo(renderRequest, renderResponse);
+        
+        if (s_log.isDebugEnabled()) {
+        	s_log.debug("folderInfo: " + folderInfo);
+        }
         
         Map<String,Object> folderInfoMap = buildFolderInfoMap( folderInfo );
+        
+        if (s_log.isDebugEnabled()) {
+        	s_log.debug("folderInfoMap: " + folderInfoMap);
+        }
 
-        renderRequest.setAttribute("repositoryId", repositoryId);
-        renderRequest.setAttribute("folderId", folderId);   
         renderRequest.setAttribute("folderInfoMap", folderInfoMap);
         
         return PAGE_PATH;
 	}
 	
     
-    protected DLFolderInfo calculateFolderInfo( RenderRequest renderRequest, RenderResponse renderResponse ) throws Exception {
+    protected DLFolderInfo buildFolderInfo( RenderRequest renderRequest, RenderResponse renderResponse ) throws Exception {
 
         ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-        long groupId = themeDisplay.getScopeGroupId();
         long repositoryId = ParamUtil.getLong(renderRequest, "repositoryId");
         long folderId = ParamUtil.getLong(renderRequest, "folderId");
         Folder folder = DLAppServiceUtil.getFolder(folderId);
@@ -95,18 +101,21 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         
         try {
         	
+
+        	DLFolderUsage folderUsage = DLFolderUsageServiceUtil.calculateFolderUsage( repositoryId, folderId, serviceContext );
+
         	folderInfo.setFolderId(folderId);
         	folderInfo.setFolderName(folder.getName());
-        	folderInfo.setFolderDescription(folder.getName());
-        	folderInfo.setCreateDate(folder.getCreateDate());
+        	folderInfo.setFolderCreateDate(folder.getCreateDate());
+        	folderInfo.setFolderDescription(folder.getDescription());
+        	folderInfo.setFolderPath(buildPath(folder));
+        	folderInfo.setFolderUsage(folderUsage);
+        	folderInfo.setFolderUserId(folder.getUserId());
         	folderInfo.setRepositoryId(repositoryId);
         	
-        	DLFolderUsage folderUsage = DLFolderUsageServiceUtil.calculateFolderUsage( groupId, repositoryId, folderId, serviceContext );
-        	folderInfo.setFolderUsage( folderUsage );
-
         } catch (Exception e) {
         	
-        	String msg = "Error calculating usage for folder " + folderId 
+        	String msg = "Error building information for folder " + folderId 
         				+ " in repository " + repositoryId
         				+ " : " + e.getMessage();
         	
@@ -127,18 +136,49 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
     protected Map<String,Object> buildFolderInfoMap( DLFolderInfo folderInfo ) {
     	
         Map<String,Object> map = new HashMap<String,Object>();
-        
+
+        map.put("folderCreateDate", folderInfo.getFolderCreateDate());
+        map.put("folderDescription", folderInfo.getFolderDescription());
         map.put("folderId", folderInfo.getFolderId());
-        map.put("repositoryId", folderInfo.getRepositoryId());
-        map.put("repositoryName", folderInfo.getRepositoryName());
-        map.put("folderLocation", folderInfo.getFolderLocation());
-        map.put("folderSize", folderInfo.getFolderUsage().getFolderSize());
-        map.put("folderCount", folderInfo.getFolderUsage().getFolderCount());
-        map.put("fileCount", folderInfo.getFolderUsage().getFileCount());
-        map.put("createDate", folderInfo.getCreateDate());
         map.put("folderName", folderInfo.getFolderName());
+        map.put("folderPath", folderInfo.getFolderPath());
+        map.put("folderUsageFileCount", folderInfo.getFolderUsage().getFileCount());
+        map.put("folderUsageFolderCount", folderInfo.getFolderUsage().getFolderCount());        
+        map.put("folderUsageFolderSize", folderInfo.getFolderUsage().getFolderSize());  
+        map.put("folderUserId", folderInfo.getFolderUserId());
+        map.put("repositoryId", folderInfo.getRepositoryId());
         
         return map;
     }
+    
+    
+	public String buildPath( Folder folder ) throws PortalException, SystemException {
+		
+		StringBuilder sb = new StringBuilder();
+
+		Folder curFolder = folder;
+
+		while (curFolder != null) {
+			sb.insert(0, folder.getName());
+			sb.insert(0, StringPool.SLASH);
+
+			curFolder = curFolder.getParentFolder();
+		}
+
+		return sb.toString();
+	}
+	
+	
+	public String[] buildPathArray( Folder folder ) throws PortalException, SystemException {
+		
+		String path = buildPath( folder );
+
+		// Remove leading /
+
+		path = path.substring(1);
+
+		return StringUtil.split(path, CharPool.SLASH);
+	}	
+
 
 }

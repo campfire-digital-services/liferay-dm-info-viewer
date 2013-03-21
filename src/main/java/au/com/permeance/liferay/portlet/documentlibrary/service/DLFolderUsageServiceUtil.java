@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 
 
 /**
- * Document Library Folder Info Service Utility.
+ * Document Library Folder Usage Service Utility.
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  */
@@ -39,13 +39,28 @@ public class DLFolderUsageServiceUtil {
     private static DLFolderUsageService _service;
 
     
-    public static DLFolderUsage calculateFolderUsage( long groupId, long repositoryId, long folderId, ServiceContext serviceContext )
+    /**
+     * Calculate Folder Usage.
+     * 
+     * @param repositoryId repository containing folder
+     * @param folderId folder ID
+     * @param serviceContext service context
+     * 
+     * @throws PortalException
+     * @throws SystemException
+     */	
+    public static DLFolderUsage calculateFolderUsage( long repositoryId, long folderId, ServiceContext serviceContext )
     		throws PortalException, SystemException 
     {
-    	return getService().calculateFolderUsage( groupId, repositoryId, folderId, serviceContext );
+    	return getService().calculateFolderUsage( repositoryId, folderId, serviceContext );
     }
 
     
+    /**
+     * Returns the Folder Usage Service.
+     * 
+     * @return DLFolderUsageService
+     */
     public static DLFolderUsageService getService() {
 
         if (_service == null) {
