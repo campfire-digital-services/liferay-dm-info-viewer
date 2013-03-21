@@ -25,7 +25,7 @@ Step 1. Navigate to Liferay Portal page containing Documents and Media portlet.
 
 Step 2. Click on the "Action" button for a folder and select the "Show Info" menu item.
 
-![Documents and Media Folder Action Menu](/docs/images/liferay-dm-portlet-folder-info-action-menu-20130319T0043.png "Documents an Media Folder Action Menu")
+![Documents and Media Folder Action Menu](/docs/images/liferay-dm-portlet-folder-info-popup-20130321T1659.jpg "Documents an Media Folder Action Menu")
 
 Step 3. View info and click "OK" button to close popup.
 
