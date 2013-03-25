@@ -29,7 +29,7 @@ Step 2. Click on the "Action" button for a folder and select the "Show Info" men
 
 Step 3. View info and click "OK" button to close popup.
 
-![Documents and Media Folder Info Popup](/docs/images/liferay-dm-portlet-folder-info-popup-20130321T1659.jpg "Documents an Media Folder Info Popup")
+![Documents and Media Folder Info Popup](/docs/images/liferay-dm-portlet-folder-info-popup-local-repos-20130325T1558.jpg "Documents an Media Folder Info Popup")
 
 
 ## Building
