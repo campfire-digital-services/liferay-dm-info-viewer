@@ -252,7 +252,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 							            draggable: true,
 							            modal: true,
 										width: 500,
-										height: 400,
+										height: 420,
 										destroyOnClose: true
 							        }).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
 							        

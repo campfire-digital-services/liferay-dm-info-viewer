@@ -30,7 +30,7 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <%
-final int MAX_DESC_LENGTH = 40;
+final int MAX_DESC_LENGTH = 60;
 final String ELLIPSIS = "...";
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -94,11 +94,11 @@ if (folderUsageFolderSizeStr != null) {
 
 <aui:form action=""> 
 <div>
-<h2 class="header-title">
+<h1 class="header-title">
 <liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
-</h2>
+</h1>
 <hr>
-<aui:fieldset label="Folder Details">
+<aui:fieldset label="folder-details">
 <ul>
 <li>ID: <%= folderId %></li>
 <li>Name: <%= folderName %></li>
@@ -110,7 +110,7 @@ if (folderUsageFolderSizeStr != null) {
 <li>Owner: <%= folderUserId %></li>
 </ul>
 </aui:fieldset>
-<aui:fieldset label="Repository Details">
+<aui:fieldset label="repository-details">
 <ul>
 <li>ID: <%= repositoryId %></li>
 <li>Name: <%= repositoryName %></li>
