@@ -35,6 +35,8 @@ public class DLFolderInfo {
 	
 	private String repositoryClassName = StringPool.BLANK;
 	
+	private String repositoryDescription = StringPool.BLANK;
+	
 	private long folderId = (-1L);
 	
 	private String folderName = StringPool.BLANK;
@@ -132,11 +134,20 @@ public class DLFolderInfo {
 		this.repositoryClassName = repositoryClassName;
 	}
 
+	public String getRepositoryDescription() {
+		return repositoryDescription;
+	}
+
+	public void setRepositoryDescription(String repositoryDescription) {
+		this.repositoryDescription = repositoryDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "DLFolderInfo [repositoryId=" + repositoryId
 				+ ", repositoryName=" + repositoryName
 				+ ", repositoryClassName=" + repositoryClassName
+				+ ", repositoryDescription=" + repositoryDescription
 				+ ", folderId=" + folderId + ", folderName=" + folderName
 				+ ", folderDescription=" + folderDescription + ", folderPath="
 				+ folderPath + ", folderCreateDate=" + folderCreateDate

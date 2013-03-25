@@ -242,26 +242,25 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 						}
 						%>
 						
-						<%-- TODO: Prefix function with portlet namespace --%>
 						<script type="text/javascript">
 							function showFolderInfoPopup() {
 							   AUI().use('aui-dialog', 'aui-io', 'event', 'event-custom', function(A) {
 							    
-							    var dialog = new A.Dialog({
+							    var popup = new A.Dialog({
 							            title: '<%= folderInfoPopupTitle %>',
 							            centered: true,
 							            draggable: true,
 							            modal: true,
-										destroyOnClose: true,
-										width: 500
+										width: 500,
+										height: 400,
+										destroyOnClose: true
 							        }).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
 							        
-							    dialog.show();
+							    popup.show();
 							  });
 							} 
 						</script>
 						
-						<%-- TODO: Use "clipboard" sprite image, as seen in messageboards portlet --%>
 				        <liferay-ui:icon
 				            image="attributes"
 				            message='<%= LanguageUtil.get(pageContext, "view-folder-info") %>'

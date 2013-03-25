@@ -25,10 +25,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -65,7 +63,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 	public String render( PortletConfig portletConfig, RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-        final String PAGE_PATH = "/portlet/document_library/folder_info.jsp";
+        final String FOLDER_INFO_PAGE_PATH = "/portlet/document_library/folder_info.jsp";
         
         DLFolderInfo folderInfo = buildFolderInfo(renderRequest, renderResponse);
         
@@ -81,7 +79,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 
         renderRequest.setAttribute("folderInfoMap", folderInfoMap);
         
-        return PAGE_PATH;
+        return FOLDER_INFO_PAGE_PATH;
 	}
 	
     
@@ -97,6 +95,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         ServiceContext serviceContext = ServiceContextFactory.getInstance(Folder.class.getName(), renderRequest);
         
         if (s_log.isDebugEnabled()) {
+        	s_log.debug("building folder info ...");
         	ParamUtil.print(renderRequest);
         	s_log.debug("groupId: " + groupId);
         	s_log.debug("scopeGroupId: " + scopeGroupId);
@@ -133,6 +132,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
     			if (repository != null) {
         			folderInfo.setRepositoryName(repository.getName());
         			folderInfo.setRepositoryClassName(repository.getClassName());
+        			folderInfo.setRepositoryDescription(repository.getDescription());
     			}
     		}
         	
@@ -172,6 +172,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         map.put("repositoryId", folderInfo.getRepositoryId());
         map.put("repositoryName", folderInfo.getRepositoryName());
         map.put("repositoryClassName", folderInfo.getRepositoryClassName());
+        map.put("repositoryDescription", folderInfo.getRepositoryDescription());
 
         return map;
     }
@@ -192,17 +193,5 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 
 		return sb.toString();
 	}
-	
-	
-	public String[] buildPathArray( Folder folder ) throws PortalException, SystemException {
-		
-		String path = buildPath( folder );
-
-		// Remove leading /
-
-		path = path.substring(1);
-
-		return StringUtil.split(path, CharPool.SLASH);
-	}	
 
 }

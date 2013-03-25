@@ -20,6 +20,7 @@
 <%@ page import="java.text.Format" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %>
 <%@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.MapUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
@@ -29,6 +30,9 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <%
+final int MAX_DESC_LENGTH = 40;
+final String ELLIPSIS = "...";
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 Map folderInfoMap = (Map)request.getAttribute("folderInfoMap");
@@ -40,10 +44,14 @@ if (StringUtils.isEmpty(repositoryName)) {
 }
 String repositoryClassName = MapUtil.getString(folderInfoMap, "repositoryClassName");
 
-// String repositoryType = StringPool.BLANK;
 String repositoryType = "Local";
 if (!StringUtils.isEmpty(repositoryClassName)) {
 	repositoryType = ResourceActionsUtil.getModelResource(locale, repositoryClassName); 
+}
+
+String repositoryDescription = MapUtil.getString(folderInfoMap, "repositoryDescription");
+if (!StringUtils.isEmpty(repositoryDescription)) {
+	repositoryDescription = StringUtil.shorten(repositoryDescription, MAX_DESC_LENGTH, ELLIPSIS);
 }
 
 long folderId = MapUtil.getLong(folderInfoMap, "folderId");
@@ -54,18 +62,18 @@ if (StringUtils.isEmpty(folderName)) {
 }
 
 String folderCreateDateStr = StringPool.BLANK;
-// Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+Format dateFormatFolderDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 Date folderCreateDate = (Date)folderInfoMap.get("folderCreateDate");
 if (folderCreateDate != null ) {
 	folderCreateDateStr = folderCreateDate.toString();
-	if (dateFormatDateTime != null) {
-		folderCreateDateStr = dateFormatDateTime.format(folderCreateDate);		
+	if (dateFormatFolderDateTime != null) {
+		folderCreateDateStr = dateFormatFolderDateTime.format(folderCreateDate);		
 	}
 }
 	
 String folderDescription = MapUtil.getString(folderInfoMap, "folderDescription");
 if (!StringUtils.isEmpty(folderDescription)) {
-	folderDescription = StringUtil.shorten(folderDescription, 40, "...");
+	folderDescription = StringUtil.shorten(folderDescription, MAX_DESC_LENGTH, ELLIPSIS);
 }
 long folderUsageFolderSize = MapUtil.getLong(folderInfoMap, "folderUsageFolderSize");
 long folderUsageFolderCount = MapUtil.getLong(folderInfoMap, "folderUsageFolderCount");
@@ -84,26 +92,31 @@ if (folderUsageFolderSizeStr != null) {
 }
 %>
 
+<aui:form action=""> 
 <div>
-<h1>
+<h2 class="header-title">
 <liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
-</h1>
+</h2>
 <hr>
-<h2>Folder Details</h2>
+<aui:fieldset label="Folder Details">
 <ul>
 <li>ID: <%= folderId %></li>
 <li>Name: <%= folderName %></li>
 <li>Description: <%= folderDescription %></li>
-<li>Creation Date: <%= folderCreateDateStr %></li>
-<li>Owner: <%= folderUserId %></li>
 <li>Location: <%= folderPath %></li>
 <li>Size: <%= folderUsageFolderSizeStr %></li>
 <li>Contents: <%= folderFileCountStr %></li>
+<li>Creation Date: <%= folderCreateDateStr %></li>
+<li>Owner: <%= folderUserId %></li>
 </ul>
-<h2>Repository Details</h2>
+</aui:fieldset>
+<aui:fieldset label="Repository Details">
 <ul>
 <li>ID: <%= repositoryId %></li>
 <li>Name: <%= repositoryName %></li>
 <li>Type: <%= repositoryType %></li>
+<li>Description: <%= repositoryDescription %></li>
 </ul>
+</aui:fieldset>
 </div>
+</aui:form>
