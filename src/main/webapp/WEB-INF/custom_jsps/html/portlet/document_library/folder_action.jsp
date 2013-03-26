@@ -22,6 +22,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+
+<%-- Define local variables as per default folder actions page --%>
+
 <%
 String randomNamespace = null;
 
@@ -115,6 +118,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 }
 %>
 
+
 <%-- Render default folder action page --%>
 
 <liferay-util:buffer var="folderActionHtml">
@@ -123,10 +127,11 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 
 
 <%-- Render custom folder action page --%>
+
 <liferay-util:buffer var="customFolderActionHtml">
 	<liferay-ui:icon-menu align='<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) ? "right" : "auto" %>' direction='<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : "down" %>' extended="<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? true : false %>" icon="<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : StringPool.BLANK %>" message='<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? "actions" : StringPool.BLANK %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 		<c:if test="<%= showActions %>">
-		    <c:if test="<%= (folder != null) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+		    <c:if test="<%= (folder != null) && !folder.isMountPoint() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
 		    	
 					<portlet:renderURL var="folderInfoURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 						<portlet:param name="struts_action" value="/document_library/folder_info"/>
@@ -162,18 +167,11 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 						} 
 					</script>
 					
-					<%--
 			        <liferay-ui:icon
 			            image="attributes"
 			            message='<%= LanguageUtil.get(pageContext, "view-folder-info") %>'
 			            url='javascript:showFolderInfoPopup();'
 			        />	
-			        --%>
-			        <liferay-ui:icon
-			            image="attributes"
-			            message='<%= LanguageUtil.get(pageContext, "view-folder-info") %>'
-			            url='javascript:showFolderInfoPopup();'/>
-				
 			</c:if>
 		</c:if>
 	</liferay-ui:icon-menu>	
@@ -258,6 +256,7 @@ if (webdavActionClassSnippetIndex > 0) {
 				System.out.println(">>> customFolderActionListItemEndIndex: " + customFolderActionListItemEndIndex);
 				
 				customFolderActionListItemHtml = customFolderActionHtml.substring( customFolderActionListItemStartIndex, customFolderActionListItemEndIndex );
+				
 				if (!StringUtils.isEmpty(customFolderActionHtml)) {
 					System.out.println(">>> customFolderActionListItemHtml.length: " + customFolderActionListItemHtml.length());
 					System.out.println(">>> customFolderActionListItemHtml: " + customFolderActionListItemHtml);
@@ -276,7 +275,6 @@ if ((customFolderActionListItemInsertIndex > 0) && !StringUtils.isEmpty(customFo
 	System.out.println(">>> sourceHtml.length: " + sourceHtml.length());
 	System.out.println(">>> customFolderActionListItemInsertIndex: " + customFolderActionListItemInsertIndex);
 	System.out.println(">>> customFolderActionHtml.length: " + customFolderActionHtml.length());
-	// resultHtml = StringUtil.insert( sourceHtml, customFolderActionHtml, customFolderActionListItemInsertIndex );
 	resultHtml = StringUtil.insert( sourceHtml, customFolderActionListItemHtml, customFolderActionListItemInsertIndex );
 	System.out.println(">>> insert complete");
 }
