@@ -20,6 +20,10 @@
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
+<%@ page import="com.liferay.portal.kernel.log.Log" %>
+<%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
+
+
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 
@@ -198,28 +202,31 @@ final String END_LIST_ITEM_TAG = "</li>";
 final int START_LIST_ITEM_TAG_LEN = START_LIST_ITEM_TAG.length();
 final int END_LIST_ITEM_TAG_LEN = END_LIST_ITEM_TAG.length();
 
+
 if (!StringUtils.isEmpty(sourceHtml)) {
-	System.out.println(">>> sourceHtml.length: " + sourceHtml.length());
-	System.out.println(">>> sourceHtml begin");
-	System.out.println(sourceHtml);
-	System.out.println(">>> sourceHtml end");	
+	LOG.info("sourceHtml.length: " + sourceHtml.length());
+	if (LOG.isDebugEnabled()) {
+		LOG.debug("sourceHtml begin");
+		LOG.debug(sourceHtml);
+		LOG.debug("sourceHtml end");	
+	}
 }
 
 if (!StringUtils.isEmpty(customFolderActionHtml)) {
-	System.out.println(">>> customFolderActionHtml.length: " + customFolderActionHtml.length());
-	System.out.println(">>> customFolderActionHtml begin");
-	System.out.println(customFolderActionHtml);
-	System.out.println(">>> customFolderActionHtml end");
+	LOG.info("customFolderActionHtml.length: " + customFolderActionHtml.length());
+	if (LOG.isDebugEnabled()) {
+		LOG.debug("customFolderActionHtml begin");
+		LOG.debug(customFolderActionHtml);
+		LOG.debug("customFolderActionHtml end");
+	}
 }
-
-String resultHtml = sourceHtml;
 
 
 // Find "Access from Desktop" menu item, which is the last menu item.
 // i.e. find webdav-action class suffix for list item snippet "<li class="esje_-webdav-action">"
 
 int webdavActionClassSnippetIndex = sourceHtml.lastIndexOf( WEBDAV_ACTION_CLASS_SUFFIX );
-System.out.println(">>> webdavActionClassSnippetIndex: " + webdavActionClassSnippetIndex);
+LOG.debug("webdavActionClassSnippetIndex: " + webdavActionClassSnippetIndex);
 
 int customFolderActionListItemInsertIndex = (-1);
 String customFolderActionListItemHtml = StringPool.BLANK;
@@ -230,11 +237,11 @@ if (webdavActionClassSnippetIndex > 0) {
 	// i.e. find list item tag start for list item snippet "<li class="esje_-webdav-action">" 
 	
 	int webdavActionListItemIndex = sourceHtml.lastIndexOf( START_LIST_ITEM_TAG, webdavActionClassSnippetIndex );
-	System.out.println(">>> webdavActionListItemIndex: " + webdavActionListItemIndex);
+	LOG.debug("webdavActionListItemIndex: " + webdavActionListItemIndex);
 	
 	if (webdavActionListItemIndex > 0) {
 		customFolderActionListItemInsertIndex = webdavActionListItemIndex;
-		System.out.println(">>> customFolderActionListItemInsertIndex: " + customFolderActionListItemInsertIndex);
+		LOG.debug("customFolderActionListItemInsertIndex: " + customFolderActionListItemInsertIndex);
 		
 		// Extract custom action HTML from enclosing parent list tag
 		// NOTE: The liferay-ui:icon-menu tag is required to correctly render the list items, 
@@ -242,48 +249,60 @@ if (webdavActionClassSnippetIndex > 0) {
 		
 		if (!StringUtils.isEmpty(customFolderActionHtml)) {
 			int customFolderActionListStartIndex = customFolderActionHtml.lastIndexOf(START_LIST_TAG);
-			System.out.println(">>> customFolderActionListStartIndex: " + customFolderActionListStartIndex);
+			LOG.debug("customFolderActionListStartIndex: " + customFolderActionListStartIndex);
 			
-			int customFolderActionListItemStartIndex = customFolderActionListStartIndex + START_LIST_TAG_LEN + 1;
-			System.out.println(">>> customFolderActionListItemStartIndex: " + customFolderActionListItemStartIndex);
-			
-			if (customFolderActionListItemStartIndex > 0) {
-				int customFolderActionListEndIndex = customFolderActionHtml.indexOf(END_LIST_TAG, customFolderActionListItemStartIndex);
-				System.out.println(">>> customFolderActionListEndIndex: " + customFolderActionListEndIndex);
+			if (customFolderActionListStartIndex > 0) {
+				int customFolderActionListItemStartIndex = customFolderActionListStartIndex + START_LIST_TAG_LEN + 1;
+				LOG.debug("customFolderActionListItemStartIndex: " + customFolderActionListItemStartIndex);
 				
-				// int customFolderActionListItemEndIndex = customFolderActionListEndIndex - 1;
-				int customFolderActionListItemEndIndex = customFolderActionListEndIndex;
-				System.out.println(">>> customFolderActionListItemEndIndex: " + customFolderActionListItemEndIndex);
-				
-				customFolderActionListItemHtml = customFolderActionHtml.substring( customFolderActionListItemStartIndex, customFolderActionListItemEndIndex );
-				
-				if (!StringUtils.isEmpty(customFolderActionHtml)) {
-					System.out.println(">>> customFolderActionListItemHtml.length: " + customFolderActionListItemHtml.length());
-					System.out.println(">>> customFolderActionListItemHtml: " + customFolderActionListItemHtml);
+				if (customFolderActionListItemStartIndex > 0) {
+					int customFolderActionListEndIndex = customFolderActionHtml.indexOf(END_LIST_TAG, customFolderActionListItemStartIndex);
+					LOG.debug("customFolderActionListEndIndex: " + customFolderActionListEndIndex);
+
+					int customFolderActionListItemEndIndex = customFolderActionListEndIndex;
+					LOG.debug("customFolderActionListItemEndIndex: " + customFolderActionListItemEndIndex);
 					
+					customFolderActionListItemHtml = customFolderActionHtml.substring( customFolderActionListItemStartIndex, customFolderActionListItemEndIndex );
+					
+					if (LOG.isDebugEnabled()) {
+						if (!StringUtils.isEmpty(customFolderActionHtml)) {
+							LOG.debug("customFolderActionListItemHtml.length: " + customFolderActionListItemHtml.length());
+							LOG.debug("customFolderActionListItemHtml: " + customFolderActionListItemHtml);
+						}
+					}
 				}
 			}
 		}
 	}
 }
 
+
 // Insert custom action before "Access from Desktop" menu item, which is the last menu item.
 // i.e. find webdav-action class suffix for list item snippet "<li class="esje_-webdav-action">"
 
+String resultHtml = sourceHtml;
+
 if ((customFolderActionListItemInsertIndex > 0) && !StringUtils.isEmpty(customFolderActionListItemHtml)) {
-	System.out.println(">>> inserting custom folder html into source html ...");
-	System.out.println(">>> sourceHtml.length: " + sourceHtml.length());
-	System.out.println(">>> customFolderActionListItemInsertIndex: " + customFolderActionListItemInsertIndex);
-	System.out.println(">>> customFolderActionHtml.length: " + customFolderActionHtml.length());
+	if (LOG.isInfoEnabled()) {
+		LOG.info("inserting custom folder html into source html ...");
+		LOG.info("sourceHtml.length: " + sourceHtml.length());
+		LOG.info("customFolderActionListItemHtml.length: " + customFolderActionListItemHtml.length());		
+		LOG.info("customFolderActionListItemInsertIndex: " + customFolderActionListItemInsertIndex);
+	}
+	
 	resultHtml = StringUtil.insert( sourceHtml, customFolderActionListItemHtml, customFolderActionListItemInsertIndex );
-	System.out.println(">>> insert complete");
+	
+	LOG.info("insert complete");
 }
 
+
 if (!StringUtils.isEmpty(resultHtml)) {
-	System.out.println(">>> resultHtml.length: " + resultHtml.length());
-	System.out.println(">>> resultHtml begin");
-	System.out.println(resultHtml);
-	System.out.println(">>> resultHtml end");	
+	LOG.info("resultHtml.length: " + resultHtml.length());
+	if (LOG.isDebugEnabled()) {
+		LOG.debug("resultHtml begin");
+		LOG.debug(resultHtml);
+		LOG.debug("resultHtml end");	
+	}	
 }
 %>
 
@@ -291,3 +310,7 @@ if (!StringUtils.isEmpty(resultHtml)) {
 <%-- Return resulting HTML --%>
 
 <%= resultHtml %> 
+
+<%!
+private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.folder_action.jsp");
+%>
