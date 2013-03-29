@@ -29,6 +29,12 @@
 <%@ page import="org.apache.commons.io.FileUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
+<style>
+.aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+	margin: 0px 0px;
+}
+</style>
+
 <%
 final int MAX_DESC_LENGTH = 60;
 final String ELLIPSIS = "...";
@@ -97,26 +103,55 @@ if (folderUsageFolderSizeStr != null) {
 <h1 class="header-title">
 <liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
 </h1>
-<hr>
 <aui:fieldset label="folder-details">
-<ul>
-<li>ID: <%= folderId %></li>
-<li>Name: <%= folderName %></li>
-<li>Description: <%= folderDescription %></li>
-<li>Location: <%= folderPath %></li>
-<li>Size: <%= folderUsageFolderSizeStr %></li>
-<li>Contents: <%= folderFileCountStr %></li>
-<li>Creation Date: <%= folderCreateDateStr %></li>
-<li>Owner: <%= folderUserId %></li>
-</ul>
+	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
+		<%= folderId %>
+	</aui:field-wrapper>
+
+	<aui:field-wrapper label="Name:" inlineLabel="true">
+		<%= folderName %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Description:" inlineLabel="true">
+		<%= folderDescription %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Location:" inlineLabel="true">
+		<%= folderPath %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Size:" inlineLabel="true">
+		<%= folderUsageFolderSizeStr %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Contents:" inlineLabel="true">
+		<%= folderFileCountStr %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Creation Date:" inlineLabel="true">
+		<%= folderCreateDateStr %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Owner:" inlineLabel="true" last="true">
+		<%= folderUserId %>
+	</aui:field-wrapper>
 </aui:fieldset>
-<aui:fieldset label="repository-details">
-<ul>
-<li>ID: <%= repositoryId %></li>
-<li>Name: <%= repositoryName %></li>
-<li>Type: <%= repositoryType %></li>
-<li>Description: <%= repositoryDescription %></li>
-</ul>
-</aui:fieldset>
+<aui:fieldset label="folder-details">
+	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
+		<%= repositoryId %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Name:" inlineLabel="true" first="true" >
+		<%= repositoryName %>
+	</aui:field-wrapper>
+	
+	<aui:field-wrapper label="Type:" inlineLabel="true" first="true" >
+		<%= repositoryType %>
+	</aui:field-wrapper>		
+	
+	<aui:field-wrapper label="Description:" inlineLabel="true" last="true">
+		<%= repositoryDescription %>
+	</aui:field-wrapper>
+</aui:fieldset>	
 </div>
 </aui:form>
