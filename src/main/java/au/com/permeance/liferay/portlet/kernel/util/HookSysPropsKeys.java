@@ -16,14 +16,12 @@ package au.com.permeance.liferay.portlet.kernel.util;
 
 
 /**
- * Hook Property Keys.
+ * Hook System Property Keys.
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  */
-public interface HookPropsKeys {
+public interface HookSysPropsKeys {
 	
-    public static final String DL_FOLDER_ACTIONS_MENU_EXT = "dl.folder.actions.menu.ext";	
-	
-    public static final String DL_FOLDER_INFO_SERVLET_CONTEXT_NAME = "dl.folder.info.servlet.context.name";
+    public static final String LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
 	
 }

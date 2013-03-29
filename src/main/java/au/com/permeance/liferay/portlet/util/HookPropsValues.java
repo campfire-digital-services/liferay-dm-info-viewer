@@ -18,6 +18,7 @@ import au.com.permeance.liferay.portlet.kernel.util.HookPropsKeys;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 
 /**
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  * @see HookPropsKeys
  */
 public class HookPropsValues {
+	
+    public static String[] DL_FOLDER_ACTIONS_MENU_EXT = StringUtil.split(PropsUtil.get(HookPropsKeys.DL_FOLDER_ACTIONS_MENU_EXT));	
 	
     public static final String DL_FOLDER_INFO_SERVLET_CONTEXT_NAME 
 		= GetterUtil.getString(PropsUtil.get(HookPropsKeys.DL_FOLDER_INFO_SERVLET_CONTEXT_NAME));    
