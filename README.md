@@ -26,7 +26,7 @@ Step 1. Navigate to Liferay Portal page containing Documents and Media portlet.
 
 ![Documents and Media Portlet](/docs/images/local-repos/liferay-dm-portlet-local-repos-root-folder-view-20130209.png "Documents and Media Portlet")
 
-Step 2. Click on the "Action" button for a folder in remove CMIS repository and select the "Show Info" menu item.
+Step 2. Click on the "Action" button for a folder in local repository and select the "Show Info" menu item.
 
 ![Documents and Media Folder Action Menu](/docs/images/common/liferay-dm-portlet-folder-info-action-menu-20130319T0043.png "Documents and Media Folder Action Menu")
 
