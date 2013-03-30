@@ -32,7 +32,7 @@ Step 2. Click on the "Action" button for a folder in remove CMIS repository and 
 
 Step 3. View info and click "close" icon to close popup.
 
-![Documents and Media Folder Info Popup (Local Repository)](/docs/images/local-repos/liferay-dm-portlet-folder-info-popup-local-repos-20130330T1643.jpg "Documents and Media Folder Info Popup (Local Repository)")
+![Documents and Media Folder Info Popup (Local Repository)](/docs/images/local-repos/liferay-dm-portlet-folder-info-popup-local-repos-20130330T2101.jpg "Documents and Media Folder Info Popup (Local Repository)")
 
 ### Browse Remote Repository (CMIS AtomPub)
 
@@ -46,7 +46,7 @@ Step 2. Click on the "Action" button for a folder in remote repository (CMIS Ato
 
 Step 3. View info and click "close" icon to close popup.
 
-![Documents and Media Remote Repository Folder (CMIS AtomPub)](/docs/images/remote-repos/cmis-alfresco/liferay-dm-portlet-folder-info-popup-remote-repos-cmis-atompub-alfresco-20130330T1806.jpg "Documents and Media Remote Repository Folder (CMIS AtomPub)")
+![Documents and Media Remote Repository Folder (CMIS AtomPub)](/docs/images/remote-repos/cmis-alfresco/liferay-dm-portlet-folder-info-popup-remote-repos-cmis-atompub-alfresco-20130330T2101.jpg "Documents and Media Remote Repository Folder (CMIS AtomPub)")
 
 
 ## Building

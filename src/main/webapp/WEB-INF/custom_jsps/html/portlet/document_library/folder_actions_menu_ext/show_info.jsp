@@ -124,9 +124,9 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 				</portlet:renderURL>
 				
 				<%
-				String folderInfoPopupTitle = "" + folderId;
+				String folderInfoPopupTitle = "Folder: " + folderId;
 				if (folder != null) {
-					folderInfoPopupTitle = folder.getName();
+					folderInfoPopupTitle = "Folder: " + folder.getName();
 				}
 				%>
 				
