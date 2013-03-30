@@ -30,8 +30,26 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <style>
-.aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+.aui-fieldset {
+	margin-top: 0px;
+	margin-bottom: 14px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
 	margin: 0px 0px;
+}
+.aui-field-wrapper-content {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.header-title {
+	margin-top: 14px;
+	margin-bottom: 14px;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 </style>
 
@@ -87,7 +105,7 @@ long folderUsageFileCount = MapUtil.getLong(folderInfoMap, "folderUsageFileCount
 String folderPath = MapUtil.getString(folderInfoMap, "folderPath");
 long folderUserId = MapUtil.getLong(folderInfoMap, "folderUserId");
 
-String folderInfoHeading = folderName + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + folderId + StringPool.CLOSE_PARENTHESIS; 
+String folderInfoHeading = folderName;
 String folderFileCountStr = folderUsageFolderCount + " Folder(s)" + ", " + folderUsageFileCount + " File(s)";
 
 String folderUsageFolderSizeStr = FileUtils.byteCountToDisplaySize(folderUsageFolderSize);
@@ -101,7 +119,7 @@ if (folderUsageFolderSizeStr != null) {
 <aui:form action=""> 
 <div>
 <h1 class="header-title">
-<liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
+	<liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
 </h1>
 <aui:fieldset label="folder-details">
 	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
@@ -136,7 +154,7 @@ if (folderUsageFolderSizeStr != null) {
 		<%= folderUserId %>
 	</aui:field-wrapper>
 </aui:fieldset>
-<aui:fieldset label="folder-details">
+<aui:fieldset label="repository-details">
 	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
 		<%= repositoryId %>
 	</aui:field-wrapper>

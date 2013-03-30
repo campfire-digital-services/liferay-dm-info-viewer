@@ -63,7 +63,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 	public String render( PortletConfig portletConfig, RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-        final String FOLDER_INFO_PAGE_PATH = "/portlet/document_library/folder_info.jsp";
+        final String FOLDER_INFO_PAGE_PATH = "/portlet/document_library/view_folder_info.jsp";
         
         DLFolderInfo folderInfo = buildFolderInfo(renderRequest, renderResponse);
         
