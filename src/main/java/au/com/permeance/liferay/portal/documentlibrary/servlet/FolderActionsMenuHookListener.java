@@ -40,12 +40,14 @@ public class FolderActionsMenuHookListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+    	System.out.println("contextInitialized");
         startApplication();
     }
 
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
+    	System.out.println("contextDestroyed");
         stopApplication();
     }
     
