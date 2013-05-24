@@ -112,6 +112,12 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 }
 %>
 
+<%
+LOG.debug("currentURL: " + currentURL);		
+LOG.debug("folderId: " + folderId);
+LOG.debug("repositoryId: " + repositoryId);
+%>
+
 <liferay-util:buffer var="iconMenuExt">
 	<c:if test="<%= showActions %>">
 	    <c:if test="<%= (folder != null) && !folder.isMountPoint() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
@@ -131,7 +137,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 				%>
 				
 				<script type="text/javascript">
-					function showFolderInfoPopup() {
+					function showFolderInfoPopup_<%= folderId %>() {
 					   AUI().use('aui-dialog', 'aui-io', 'event', 'event-custom', function(A) {
 					    
 					    var popup = new A.Dialog({
@@ -149,13 +155,21 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 					} 
 				</script>
 				
+				<%
+				String iconURL = "javascript:showFolderInfoPopup_" + folderId + "();";
+				%>
+				
 		        <liferay-ui:icon
 		            image="attributes"
 		            message='<%= LanguageUtil.get(pageContext, "view-folder-info") %>'
-		            url='javascript:showFolderInfoPopup();'
+		            url='<%= iconURL %>'
 		        />	
 		</c:if>
 	</c:if>
 </liferay-util:buffer>
 
 <%= iconMenuExt %> 
+
+<%!
+private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.folder_actions_menu_ext.show_info.jsp");
+%>
