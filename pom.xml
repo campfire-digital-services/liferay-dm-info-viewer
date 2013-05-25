@@ -4,17 +4,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
-    <parent>
-        <artifactId>permeance-parent</artifactId>
-        <groupId>au.com.permeance</groupId>
-        <version>0.5</version>        
-    </parent>
+
+	<parent>
+		<artifactId>permeance-parent</artifactId>
+		<groupId>au.com.permeance</groupId>
+		<version>0.5</version>
+	</parent>
 
 	<groupId>au.com.permeance.utility</groupId>
 	<artifactId>liferay-dm-info-viewer-hook</artifactId>
-	<version>1.0.0.0</version>
+	<version>1.0.0.1</version>
 	<packaging>war</packaging>
+	<description>A hook plugin for Liferay Portal which shows a summary view of a folder in a  Documents and Media repository.</description>
 
 	<properties>
 		<liferay.version>6.1.1</liferay.version>
@@ -77,4 +78,9 @@
 		</dependency>
 	</dependencies>
 
+	<organization>
+		<name>Permeance Technologies</name>
+		<url>http://www.permeance.com.au</url>
+	</organization>
+	<name>Liferay Documents and Media Information Viewer Hook Plugin.</name>
 </project>
