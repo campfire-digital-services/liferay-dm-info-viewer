@@ -15,7 +15,6 @@
 	<artifactId>liferay-dm-info-viewer-hook</artifactId>
 	<version>1.0.0.1</version>
 	<packaging>war</packaging>
-	<description>A hook plugin for Liferay Portal which shows a summary view of a folder in a  Documents and Media repository.</description>
 
 	<properties>
 		<liferay.version>6.1.1</liferay.version>
@@ -83,4 +82,6 @@
 		<url>http://www.permeance.com.au</url>
 	</organization>
 	<name>Liferay Documents and Media Information Viewer Hook Plugin.</name>
+	<description>A hook plugin for Liferay Portal which shows a summary view of a folder in a Documents and Media repository.</description>	
+	<url>https://github.com/permeance/liferay-dm-info-viewer</url>
 </project>
