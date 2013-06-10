@@ -30,9 +30,15 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class HookPropsValues {
 	
-    public static String[] DL_FOLDER_ACTIONS_MENU_EXT = StringUtil.split(PropsUtil.get(HookPropsKeys.DL_FOLDER_ACTIONS_MENU_EXT));	
+	public static String DEFAULT_DL_FOLDER_ACTIONS_MENU_EXT = "show_info";
+	
+	public static String DEFAULT_DL_FOLDER_INFO_SERVLET_CONTEXT_NAME = "liferay-dm-info-viewer-hook";
+	
+	public static String[] DL_FOLDER_ACTIONS_MENU_EXT 
+		= StringUtil.split(
+				GetterUtil.get(PropsUtil.get(HookPropsKeys.DL_FOLDER_ACTIONS_MENU_EXT),DEFAULT_DL_FOLDER_ACTIONS_MENU_EXT));
 	
     public static final String DL_FOLDER_INFO_SERVLET_CONTEXT_NAME 
-		= GetterUtil.getString(PropsUtil.get(HookPropsKeys.DL_FOLDER_INFO_SERVLET_CONTEXT_NAME));    
+    	= GetterUtil.getString(PropsUtil.get(HookPropsKeys.DL_FOLDER_INFO_SERVLET_CONTEXT_NAME),DEFAULT_DL_FOLDER_INFO_SERVLET_CONTEXT_NAME);    
     
 }

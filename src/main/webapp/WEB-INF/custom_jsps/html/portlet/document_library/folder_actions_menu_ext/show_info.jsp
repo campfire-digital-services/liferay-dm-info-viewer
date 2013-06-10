@@ -113,9 +113,11 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 %>
 
 <%
-LOG.debug("currentURL: " + currentURL);		
-LOG.debug("folderId: " + folderId);
-LOG.debug("repositoryId: " + repositoryId);
+if (LOG.isDebugEnabled()) {
+	LOG.debug("currentURL: " + currentURL);		
+	LOG.debug("folderId: " + folderId);
+	LOG.debug("repositoryId: " + repositoryId);
+}
 %>
 
 <liferay-util:buffer var="iconMenuExt">
