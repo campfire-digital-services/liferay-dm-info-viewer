@@ -59,7 +59,7 @@ Step 2. Build and package
 
     % mvn -U clean package
 
-This will build "liferay-dm-info-viewer-hook-XXX.war" in the targets tolder.
+This will build "liferay-dm-info-viewer-hook-A.B.C.D.war" in the targets tolder.
 
 NOTE: You will require JDK 1.6+ and Maven 3.
 
@@ -68,7 +68,7 @@ NOTE: You will require JDK 1.6+ and Maven 3.
 
 ### Liferay Portal + Apache Tomcat Bundle
 
-* Deploy "liferay-dm-info-viewer-hook-1.0.0.0.war" to "LIFERAY_HOME/deploy" folder.
+* Deploy "liferay-dm-info-viewer-hook-A.B.C.D.war" to "LIFERAY_HOME/deploy" folder.
 
 
 ## Project Team

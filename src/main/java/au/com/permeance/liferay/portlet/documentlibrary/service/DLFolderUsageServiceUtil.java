@@ -16,7 +16,7 @@
 package au.com.permeance.liferay.portlet.documentlibrary.service;
 
 import au.com.permeance.liferay.portlet.documentlibrary.model.DLFolderUsage;
-import au.com.permeance.liferay.portlet.util.HookPropsValues;
+import au.com.permeance.liferay.portlet.util.FolderInfoPropsValues;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,7 +64,7 @@ public class DLFolderUsageServiceUtil {
     public static DLFolderUsageService getService() {
 
         if (_service == null) {
-        	String servletContextName = HookPropsValues.DL_FOLDER_INFO_SERVLET_CONTEXT_NAME;
+        	String servletContextName = FolderInfoPropsValues.DL_FOLDER_INFO_SERVLET_CONTEXT_NAME;
         	if (StringUtils.isEmpty(servletContextName)) {
         		throw new IllegalStateException("Servlet context name is undefined");
         	}

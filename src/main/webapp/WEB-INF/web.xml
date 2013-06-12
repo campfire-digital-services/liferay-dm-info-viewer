@@ -30,7 +30,7 @@ not, see <http://www.gnu.org/licenses/>.
 	</context-param>	
 
 	<listener>
-		<listener-class>au.com.permeance.liferay.portal.documentlibrary.servlet.FolderActionsMenuHookListener</listener-class>
+		<listener-class>au.com.permeance.liferay.portal.documentlibrary.servlet.FolderInfoActionMenuHookListener</listener-class>
 	</listener>
 	
 	<listener>
@@ -42,7 +42,7 @@ not, see <http://www.gnu.org/licenses/>.
 	 -->	
 	<servlet>
 		<servlet-name>Startup Servlet</servlet-name>
-		<servlet-class>au.com.permeance.liferay.portal.documentlibrary.servlet.StartupServlet</servlet-class>
+		<servlet-class>au.com.permeance.liferay.portal.documentlibrary.servlet.FolderInfoActionStartupServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 
