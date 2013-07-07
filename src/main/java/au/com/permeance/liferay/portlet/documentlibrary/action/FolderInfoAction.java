@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -36,6 +37,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
@@ -114,6 +116,8 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         
         try {
         	
+        	User user = UserServiceUtil.getUserById(folder.getUserId());
+        	
         	DLFolderUsage folderUsage = DLFolderUsageServiceUtil.calculateFolderUsage( repositoryId, folderId, serviceContext );
 
         	folderInfo.setFolderId(folderId);
@@ -123,6 +127,10 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         	folderInfo.setFolderPath(buildPath(folder));
         	folderInfo.setFolderUsage(folderUsage);
         	folderInfo.setFolderUserId(folder.getUserId());
+        	
+        	if (user != null) {
+        		folderInfo.setFolderUserFullName(user.getFullName());
+        	}
         	
         	folderInfo.setRepositoryId(repositoryId);
         	
@@ -169,6 +177,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
         map.put("folderUsageFolderCount", folderInfo.getFolderUsage().getFolderCount());        
         map.put("folderUsageFolderSize", folderInfo.getFolderUsage().getFolderSize());  
         map.put("folderUserId", folderInfo.getFolderUserId());
+        map.put("folderUserFullName", folderInfo.getFolderUserFullName());
         map.put("repositoryId", folderInfo.getRepositoryId());
         map.put("repositoryName", folderInfo.getRepositoryName());
         map.put("repositoryClassName", folderInfo.getRepositoryClassName());

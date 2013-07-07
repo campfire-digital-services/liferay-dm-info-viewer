@@ -51,6 +51,9 @@ public class DLFolderInfo {
 	
 	private long folderUserId = (-1L);
 	
+	private String folderUserFullName = StringPool.BLANK;
+	
+	
 	public DLFolderInfo() {
 	}
 
@@ -117,6 +120,14 @@ public class DLFolderInfo {
 	public void setFolderUserId(long folderUserId) {
 		this.folderUserId = folderUserId;
 	}
+	
+	public String getFolderUserFullName() {
+		return folderUserFullName;
+	}
+
+	public void setFolderUserFullName(String folderUserFullName) {
+		this.folderUserFullName = folderUserFullName;
+	}	
 
 	public String getRepositoryName() {
 		return repositoryName;
@@ -152,7 +163,8 @@ public class DLFolderInfo {
 				+ ", folderDescription=" + folderDescription + ", folderPath="
 				+ folderPath + ", folderCreateDate=" + folderCreateDate
 				+ ", folderUsage=" + folderUsage + ", folderUserId="
-				+ folderUserId + "]";
+				+ folderUserId + ", folderUserFullName=" + folderUserFullName
+				+ "]";
 	}
 
 }

@@ -61,23 +61,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Map folderInfoMap = (Map)request.getAttribute("folderInfoMap");
 
-long repositoryId = MapUtil.getLong(folderInfoMap, "repositoryId");
-String repositoryName = MapUtil.getString(folderInfoMap, "repositoryName");
-if (StringUtils.isEmpty(repositoryName)) {
-	repositoryName = "Local";
-}
-String repositoryClassName = MapUtil.getString(folderInfoMap, "repositoryClassName");
-
-String repositoryType = "Local";
-if (!StringUtils.isEmpty(repositoryClassName)) {
-	repositoryType = ResourceActionsUtil.getModelResource(locale, repositoryClassName); 
-}
-
-String repositoryDescription = MapUtil.getString(folderInfoMap, "repositoryDescription");
-if (!StringUtils.isEmpty(repositoryDescription)) {
-	repositoryDescription = StringUtil.shorten(repositoryDescription, MAX_DESC_LENGTH, ELLIPSIS);
-}
-
 long folderId = MapUtil.getLong(folderInfoMap, "folderId");
 
 String folderName = MapUtil.getString(folderInfoMap, "folderName");
@@ -104,15 +87,46 @@ long folderUsageFolderCount = MapUtil.getLong(folderInfoMap, "folderUsageFolderC
 long folderUsageFileCount = MapUtil.getLong(folderInfoMap, "folderUsageFileCount");
 String folderPath = MapUtil.getString(folderInfoMap, "folderPath");
 long folderUserId = MapUtil.getLong(folderInfoMap, "folderUserId");
+String folderUserFullName = MapUtil.getString(folderInfoMap, "folderUserFullName");
+String folderOwner = ""+folderUserId;
+if (!StringUtils.isEmpty(folderUserFullName)) {
+	folderOwner = folderUserFullName + " (" + folderUserId + ")";
+}
 
 String folderInfoHeading = folderName;
-String folderFileCountStr = folderUsageFolderCount + " Folder(s)" + ", " + folderUsageFileCount + " File(s)";
+String folderFileCountStr = folderUsageFolderCount + " Folder";
+if (folderUsageFolderCount != 1) {
+	folderFileCountStr += "s";
+}
+folderFileCountStr += ", " + folderUsageFileCount + " File";
+if (folderUsageFileCount != 1) {
+	folderFileCountStr += "s";
+}
 
 String folderUsageFolderSizeStr = FileUtils.byteCountToDisplaySize(folderUsageFolderSize);
 if (folderUsageFolderSizeStr != null) {
 	if (!folderUsageFolderSizeStr.endsWith("bytes")) {
 		folderUsageFolderSizeStr += " (" + folderUsageFolderSize + " bytes)";
 	}
+}
+
+long repositoryId = MapUtil.getLong(folderInfoMap, "repositoryId");
+String repositoryName = MapUtil.getString(folderInfoMap, "repositoryName");
+if (StringUtils.isEmpty(repositoryName)) {
+	repositoryName = "Local";
+}
+String repositoryClassName = MapUtil.getString(folderInfoMap, "repositoryClassName");
+
+String repositoryType = "Local";
+if (!StringUtils.isEmpty(repositoryClassName)) {
+	repositoryType = ResourceActionsUtil.getModelResource(locale, repositoryClassName); 
+}
+
+String repositoryDescription = MapUtil.getString(folderInfoMap, "repositoryDescription");
+if (StringUtils.isEmpty(repositoryDescription)) {
+	repositoryDescription = "Local Repository";
+} else {
+	repositoryDescription = StringUtil.shorten(repositoryDescription, MAX_DESC_LENGTH, ELLIPSIS);
 }
 %>
 
@@ -151,7 +165,7 @@ if (folderUsageFolderSizeStr != null) {
 	</aui:field-wrapper>
 	
 	<aui:field-wrapper label="Owner:" inlineLabel="true" last="true">
-		<%= folderUserId %>
+		<%= folderOwner %>
 	</aui:field-wrapper>
 </aui:fieldset>
 <aui:fieldset label="repository-details">
