@@ -13,7 +13,7 @@
 
 	<groupId>au.com.permeance.utility</groupId>
 	<artifactId>liferay-dm-info-viewer-hook</artifactId>
-	<version>1.0.1.1</version>
+	<version>1.0.2.1</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -21,6 +21,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>portal-impl</artifactId>
+			<version>${liferay.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>portal-service</artifactId>

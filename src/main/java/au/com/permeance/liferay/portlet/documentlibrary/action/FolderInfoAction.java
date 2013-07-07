@@ -185,7 +185,7 @@ public class FolderInfoAction extends BaseStrutsPortletAction {
 		Folder curFolder = folder;
 
 		while (curFolder != null) {
-			sb.insert(0, folder.getName());
+			sb.insert(0, curFolder.getName());
 			sb.insert(0, StringPool.SLASH);
 
 			curFolder = curFolder.getParentFolder();
