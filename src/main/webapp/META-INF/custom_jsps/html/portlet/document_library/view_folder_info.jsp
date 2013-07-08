@@ -124,7 +124,9 @@ if (!StringUtils.isEmpty(repositoryClassName)) {
 
 String repositoryDescription = MapUtil.getString(folderInfoMap, "repositoryDescription");
 if (StringUtils.isEmpty(repositoryDescription)) {
-	repositoryDescription = "Local Repository";
+	if ("Local".equals(repositoryType)) {
+		repositoryDescription = "Local Repository";		
+	}
 } else {
 	repositoryDescription = StringUtil.shorten(repositoryDescription, MAX_DESC_LENGTH, ELLIPSIS);
 }
