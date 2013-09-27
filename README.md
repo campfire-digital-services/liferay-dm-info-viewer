@@ -9,8 +9,8 @@ The view is similar to MS Windows File Explorer Properties and Apple Mac OS X Fi
 
 ## Supported Products
 
-* Liferay Portal 6.1 CE GA2 (6.1.1+)
-* Liferay Portal 6.1 EE GA2 (6.1.20+)
+* Liferay Portal 6.1 CE GA2, GA3 (6.1.1+)
+* Liferay Portal 6.1 EE GA2, GA3 (6.1.20+)
 
 
 ## Downloads
