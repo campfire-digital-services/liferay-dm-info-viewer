@@ -30,16 +30,16 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <style>
-.aui-fieldset {
+.fieldset {
 	margin-top: 0px;
 	margin-bottom: 14px;
 	margin-left: 0px;
 	margin-right: 0px;
 }
-.aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+.field-content, .field-row, .button-holder, .field-wrapper-content {
 	margin: 0px 0px;
 }
-.aui-field-wrapper-content {
+.field-wrapper-content {
 	margin-top: 2px;
 	margin-bottom: 2px;
 	margin-left: 0px;

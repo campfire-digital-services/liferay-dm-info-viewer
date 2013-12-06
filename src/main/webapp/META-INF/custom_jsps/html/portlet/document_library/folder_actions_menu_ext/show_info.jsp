@@ -140,9 +140,11 @@ if (LOG.isDebugEnabled()) {
 				
 				<script type="text/javascript">
 					function showFolderInfoPopup_<%= folderId %>() {
-					   AUI().use('aui-dialog', 'aui-io', 'event', 'event-custom', function(A) {
+					   AUI().use('liferay-util-window', 'aui-io-deprecated', 'event', 'event-custom', function(A) {
 					    
-					    var popup = new A.Dialog({
+					    var popup = Liferay.Util.Window.getWindow(
+{
+dialog: {
 					            title: '<%= folderInfoPopupTitle %>',
 					            centered: true,
 					            draggable: true,
@@ -150,7 +152,7 @@ if (LOG.isDebugEnabled()) {
 								width: 500,
 								height: 420,
 								destroyOnClose: true
-					        }).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
+					        }}).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
 					        
 					    popup.show();
 					  });
