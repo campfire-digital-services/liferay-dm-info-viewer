@@ -30,16 +30,29 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <style>
-.fieldset {
+.aui .modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 5px;
+    position: relative;
+    margin: 5px;
+}
+.aui .control-group {
+    margin-bottom: 5px;
+}
+.aui legend {
+    margin-bottom: 5px;
+}
+.aui .fieldset {
 	margin-top: 0px;
-	margin-bottom: 14px;
+	margin-bottom: 10px;
 	margin-left: 0px;
 	margin-right: 0px;
 }
-.field-content, .field-row, .button-holder, .field-wrapper-content {
+.aui .field-content, .aui .field-row, .aui .button-holder, .aui .field-wrapper {
 	margin: 0px 0px;
 }
-.field-wrapper-content {
+.aui .field-wrapper {
 	margin-top: 2px;
 	margin-bottom: 2px;
 	margin-left: 0px;
@@ -134,9 +147,9 @@ if (StringUtils.isEmpty(repositoryDescription)) {
 
 <aui:form action=""> 
 <div>
-<h1 class="header-title">
+<h3 class="header-title">
 	<liferay-ui:icon image="folder_open" />&nbsp;<%= folderInfoHeading %>
-</h1>
+</h3>
 <aui:fieldset label="folder-details">
 	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
 		<%= folderId %>

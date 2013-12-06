@@ -140,22 +140,22 @@ if (LOG.isDebugEnabled()) {
 				
 				<script type="text/javascript">
 					function showFolderInfoPopup_<%= folderId %>() {
-					   AUI().use('liferay-util-window', 'aui-io-deprecated', 'event', 'event-custom', function(A) {
-					    
-					    var popup = Liferay.Util.Window.getWindow(
-{
-dialog: {
-					            title: '<%= folderInfoPopupTitle %>',
-					            centered: true,
-					            draggable: true,
-					            modal: true,
-								width: 500,
-								height: 420,
-								destroyOnClose: true
-					        }}).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
-					        
-					    popup.show();
-					  });
+						AUI().use('liferay-util-window', 'aui-io-deprecated', 'event', 'event-custom', function(A) {
+						    
+						    var popup = Liferay.Util.Window.getWindow(
+							{
+								dialog: {
+						            title: '<%= folderInfoPopupTitle %>',
+						            centered: true,
+						            draggable: true,
+						            modal: true,
+									width: 500,
+									height: 440,
+									destroyOnClose: true
+							}}).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
+						        
+							popup.show();
+						});						
 					} 
 				</script>
 				
