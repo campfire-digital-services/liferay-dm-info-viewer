@@ -35,12 +35,22 @@
     overflow-y: auto;
     padding: 5px;
     position: relative;
-    margin: 5px;
+    margin-top: 0x;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.aui h1, .aui h2, .aui h3, .aui h4, .aui h5, .aui h6 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .aui .control-group {
     margin-bottom: 5px;
 }
 .aui legend {
+    font-size: 18px;
     margin-bottom: 5px;
 }
 .aui .fieldset {
@@ -59,8 +69,8 @@
 	margin-right: 0px;
 }
 .header-title {
-	margin-top: 14px;
-	margin-bottom: 14px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	margin-left: 0px;
 	margin-right: 0px;
 }
@@ -184,15 +194,15 @@ if (StringUtils.isEmpty(repositoryDescription)) {
 	</aui:field-wrapper>
 </aui:fieldset>
 <aui:fieldset label="repository-details">
-	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="ID:" inlineLabel="true" first="true">
 		<%= repositoryId %>
 	</aui:field-wrapper>
 	
-	<aui:field-wrapper label="Name:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="Name:" inlineLabel="true">
 		<%= repositoryName %>
 	</aui:field-wrapper>
 	
-	<aui:field-wrapper label="Type:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="Type:" inlineLabel="true">
 		<%= repositoryType %>
 	</aui:field-wrapper>		
 	

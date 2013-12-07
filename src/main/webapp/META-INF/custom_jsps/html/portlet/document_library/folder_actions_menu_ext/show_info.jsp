@@ -150,7 +150,7 @@ if (LOG.isDebugEnabled()) {
 						            draggable: true,
 						            modal: true,
 									width: 500,
-									height: 440,
+									height: 560,
 									destroyOnClose: true
 							}}).plug(A.Plugin.IO, {uri: '<%= folderInfoURL %>'}).render();
 						        
