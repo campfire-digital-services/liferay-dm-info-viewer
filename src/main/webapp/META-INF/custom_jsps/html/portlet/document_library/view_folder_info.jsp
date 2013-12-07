@@ -171,15 +171,15 @@ if (StringUtils.isEmpty(repositoryDescription)) {
 	</aui:field-wrapper>
 </aui:fieldset>
 <aui:fieldset label="repository-details">
-	<aui:field-wrapper label="ID:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="ID:" inlineLabel="true" first="true">
 		<%= repositoryId %>
 	</aui:field-wrapper>
 	
-	<aui:field-wrapper label="Name:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="Name:" inlineLabel="true">
 		<%= repositoryName %>
 	</aui:field-wrapper>
 	
-	<aui:field-wrapper label="Type:" inlineLabel="true" first="true" >
+	<aui:field-wrapper label="Type:" inlineLabel="true">
 		<%= repositoryType %>
 	</aui:field-wrapper>		
 	
